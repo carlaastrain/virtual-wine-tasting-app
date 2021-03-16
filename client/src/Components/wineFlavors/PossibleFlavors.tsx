@@ -3,8 +3,10 @@ import { FruitFlavor, DryFruitFlavor, FloralFlavor, HerbFlavor, SpiceFlavor, Ear
 import wineDB from '../wineDB/WineDB'
 
 type Props = {
+  updatePossibleFlavors: (args: any) => void,
   wineDB: typeof wineDB,
   grape: keyof typeof wineDB,
+
 }
 
 export default function PossibleFlavors({ updatePossibleFlavors, grape, wineDB }: Props) {

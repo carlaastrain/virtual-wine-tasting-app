@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { withStyles } from '@material-ui/core/styles';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import lemon from '../pictures/lemon.svg'
 
 const StyledRating = withStyles({
@@ -15,7 +15,12 @@ const StyledRating = withStyles({
   },
 })(Rating);
 
-function AcidityRating({ acidity, updateAcidity }) {
+interface Props {
+  acidity: number
+  updateAcidity: (event: ChangeEvent<{}>, newValue: number | null) => void
+}
+
+function AcidityRating({ acidity, updateAcidity }: Props) {
 
   const [statusImage, setStatusImage] = useState(true)
 

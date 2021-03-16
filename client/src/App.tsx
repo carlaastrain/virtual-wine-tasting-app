@@ -9,7 +9,7 @@ import Home from "./Components/Home/Home";
 
 export default function App() {
 
-  const [user, setUser] = useState({ mail: '', password: '', userId: '' });
+  const [user, setUser] = useState({ mail: '', password: '', userId: 0 });
   const [userValidated, setUserValidated] = useState(false);
 
   function loginUser(mail: string, password: string, userId: number, validated: any) {

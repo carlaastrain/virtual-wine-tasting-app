@@ -1,5 +1,11 @@
 
-export default function User({ user }) {
+import { User } from '../ApiService'
+
+interface Props {
+  user: User
+}
+
+export default function User({ user }: Props) {
 
   return (<div>
 

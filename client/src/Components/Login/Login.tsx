@@ -3,7 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import * as ApiService from '../ApiService';
 
-export default function Login({ loginUser }) {
+interface Props {
+  loginUser: (mail: string, password: string, userId: number, validated: any) => void
+}
+
+export default function Login({ loginUser }: Props) {
 
   // LOGIN - STATES
   const [mail, setMail] = useState("");
@@ -24,12 +28,12 @@ export default function Login({ loginUser }) {
     checkIfUserIsInDatabase()
   }, [mail])
 
-  async function getAllUsers() {
-    const users = await ApiService.getUsers()
-    setUsers(users)
-  }
+  // async function getAllUsers() {
+  //   const users = await ApiService.getUsers()
+  //   setUsers(users)
+  // }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: any) {
     event.preventDefault();
     if (mail && password && isRegistered === true && password === passwordFromDB) {
       loginUser(mail, password, userId, { userValidated: true })
@@ -38,7 +42,7 @@ export default function Login({ loginUser }) {
 
   async function checkIfUserIsInDatabase() {
     const users = await ApiService.getUsers()
-    users?.map(user => {
+    users.map((user) => {
       if (user.mail === mail) {
         setIsRegistered(true);
         setPasswordFromDB(user.password)
@@ -105,7 +109,7 @@ export default function Login({ loginUser }) {
             onChange={handleChangePassword}
             placeholder="Type in your password ..."
           ></input>
-          <button type="submit" class='login__btn'>login</button>
+          <button type="submit" className='login__btn'>login</button>
         </form>
       </div>
       <div className='go__to__register'>to create a new user click <div onClick={() => setUserExists(false)} className='go__to__register__btn'>here</div></div>
@@ -127,7 +131,7 @@ export default function Login({ loginUser }) {
             onChange={handleChangeNewPassword}
             placeholder="Type in your password ..."
           ></input>
-          <button type="submit" class='login__btn' onClick={() => console.log(newMail, newPassword)}>register</button>
+          <button type="submit" className='login__btn' onClick={() => console.log(newMail, newPassword)}>register</button>
         </form>
       </div>
     </div>) : (<div className='successfully__registred'>

@@ -353,7 +353,7 @@ const riesling: Wine = {
   },
 };
 
-const WineDB = {
+const WineDB: { [key: string]: Wine } = {
   malbec: malbec,
   pinotnoir: pinotnoir,
   merlot: merlot,

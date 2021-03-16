@@ -3,7 +3,7 @@ import { RequestHandler } from 'express'
 
 // Create and Save a new Tasting
 export const create: RequestHandler = async (req, res) => {
-      if (!req.body.winery) {
+    if (!req.body.winery) {
         res.status(400).send({
             message: 'Content can not be empty!'
         });
@@ -26,15 +26,15 @@ export const create: RequestHandler = async (req, res) => {
     };
 
     // Save Tasting in the database
-    await Tasting.create(tasting)
-    //Tasting.create(tasting)
+    const data = await Tasting.create(tasting)
+        //Tasting.create(tasting)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-          err.message || 'Some error occurred while creating the Tasting.'
+                    err.message || 'Some error occurred while creating the Tasting.'
             });
         });
 };
@@ -42,14 +42,14 @@ export const create: RequestHandler = async (req, res) => {
 // Retrieve all Tastings from the database.
 export const findAll: RequestHandler = (req, res) => {
     const id = req.params.id;
-    Tasting.findAll({where: {userId: id}})
+    Tasting.findAll({ where: { userId: id } })
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-          err.message || 'Some error occurred while retrieving tutorials.'
+                    err.message || 'Some error occurred while retrieving tutorials.'
             });
         });
 };

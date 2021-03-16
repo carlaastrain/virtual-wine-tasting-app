@@ -12,14 +12,30 @@ export async function getTastings(id: number) {
   }
 }
 
+export interface Tasting {
+  id: number,
+  winery: string,
+  year: number,
+  grape: string,
+  fruit: number,
+  acidity: number,
+  tannins: number,
+  body: number,
+  dominantFlavors: string[],
+  arrPossibleFlavors: string[],
+  overallRating: number,
+  userId: number
+}
+
 // POST ONE TASTING TO DB
-export function postTasting(options: any) {
+export function postTasting(options: Tasting) {
   axios.post(url + '/api/tastings', options)
     .then(function (response) {
       console.log(response);
     })
     .catch(function (error) {
       console.log(error);
+
     });
 }
 
@@ -45,13 +61,23 @@ export function postUser(options: { mail: string, password: string }) {
     });
 }
 
+export interface User {
+  userId: number,
+  mail: string,
+  password: string,
+  createdAt: string,
+  updatedAt: string
+}
+
 // GET ALL USERS
-export async function getUsers() {
+export async function getUsers(): Promise<User> {
   try {
     const response = await axios.get(url + '/api/allusers');
     // console.log(response);
     return response.data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
+
 }

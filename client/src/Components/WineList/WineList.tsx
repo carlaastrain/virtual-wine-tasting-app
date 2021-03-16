@@ -2,36 +2,15 @@ import WineCard from '../WineCard/WineCard';
 import * as ApiService from '../ApiService';
 import { useEffect, useState } from 'react';
 
-interface Tasting {
-  id: number,
-  "winery": "Malbec",
-  "year": 1935,
-  "grape": "malbec",
-  "fruit": "1.5",
-  "acidity": "2",
-  "tannins": "3",
-  "body": "1935",
-  "dominantFlavors": [
-    "Vanilla",
-    "Blueberry"
-  ],
-  "arrPossibleFlavors": [
-    [
-      "Wild Iris"
-    ],
-    [
-      "Clay Pot"
-    ]
-  ],
-  "overallRating": "3",
-  "createdAt": "2021-03-14T12:04:45.910Z",
-  "updatedAt": "2021-03-14T12:04:45.910Z",
-  "userId": 1
+
+interface Props {
+  user: ApiService.User
 }
 
-export default function WineList({ user }) {
+//user is just one key in the props object 
+export default function WineList({ user }: Props) {
 
-  const [wineListDB, setWineListDB] = useState<Tasting[]>([])
+  const [wineListDB, setWineListDB] = useState<ApiService.Tasting[]>([])
 
   useEffect(() => {
     ApiService.getTastings(user.userId)

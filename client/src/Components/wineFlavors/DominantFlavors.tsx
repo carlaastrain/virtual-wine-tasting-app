@@ -1,13 +1,23 @@
 import { useState } from "react";
+import WineDB, { Flavor, Wine } from '../wineDB/WineDB'
+
+interface Props {
+  updateDominantFlavors: (args: any) => void,
+  grape: string,
+  wineDB: { [key: string]: Wine }
+}
+
 
 export default function DominantFlavors({
   updateDominantFlavors,
   grape,
   wineDB,
-}) {
-  const [flavors, setFlavors] = useState({});
+}: Props) {
 
-  function updateFlavors(flavor) {
+
+  const [flavors, setFlavors] = useState<Partial<Record<Flavor, Flavor>>>({});
+
+  function updateFlavors(flavor: Flavor) {
     if (flavors[flavor]) {
       delete flavors[flavor];
       setFlavors((prev) => ({

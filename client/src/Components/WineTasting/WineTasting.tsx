@@ -7,26 +7,18 @@ import DominantFlavors from "../wineFlavors/DominantFlavors";
 import PossibleFlavors from "../wineFlavors/PossibleFlavors";
 import WineDB from "../wineDB/WineDB";
 import OverallRating from "../wineOverallRating/OverallRating";
+import { User, Tasting } from '../ApiService'
 
 function myFunc<T>(myArg: T): T {
   return myArg;
 }
 
-export type WineList = {
-  userId: number,
-  winery: string,
-  year: string,
-  grape: string,
-  fruit: number,
-  acidity: number,
-  tannins: number,
-  body: number,
-  dominantFlavors: string[],
-  arrPossibleFlavors: string[],
-  overallRating: number,
+
+interface Props {
+  user: User
 }
 
-export default function WineTasting({ user }) {
+export default function WineTasting({ user }: Props) {
 
   const [startTasting, setStartTasting] = useState(false);
   const [winery, setWinery] = useState("");
@@ -39,7 +31,7 @@ export default function WineTasting({ user }) {
   const [acidity, setAcidity] = useState(0);
   const [possibleFlavors, setPossibleFlavors] = useState({});
   const [dominantFlavors, setDominantFlavors] = useState([]);
-  const [wineList, setWineList] = useState<WineList>();
+  const [wineList, setWineList] = useState<Tasting>();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -82,19 +74,19 @@ export default function WineTasting({ user }) {
     return tannins !== 0 && body === 0;
   }
 
-  function updateBody(event, value) {
+  function updateBody(event: any, value: string) {
     setBody(value);
   }
 
-  function updateFruit(event, value) {
+  function updateFruit(event: any, value) {
     setFruit(value);
   }
 
-  function updateTannins(event, value) {
+  function updateTannins(event: any, value) {
     setTannins(value);
   }
 
-  function updateAcidity(event, value) {
+  function updateAcidity(event: any, value) {
     setAcidity(value);
   }
 
@@ -111,7 +103,7 @@ export default function WineTasting({ user }) {
       {
         userId: user.userId,
         winery: winery,
-        year: year,
+        year: parseInt(year),
         grape: grape,
         fruit: fruit,
         acidity: acidity,
@@ -158,7 +150,7 @@ export default function WineTasting({ user }) {
               <option name='cabernetSauvignon'>CabernetSauvignon</option>
               <option name='pinotNoir'>PinotNoir</option>
             </select>
-            <button type="submit" class="start__tasting__btn">start tasting</button>
+            <button type="submit" className="start__tasting__btn">start tasting</button>
           </form>
         </div> </div>) : (
         <></>

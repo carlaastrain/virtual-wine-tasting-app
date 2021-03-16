@@ -16,14 +16,21 @@ const StyledRating = withStyles({
   },
 })(Rating);
 
-export default function OverallRating({ submitRating, wineList }) {
+
+interface Props {
+  submitRating: (args: any) => void,
+  wineList: ApiService.Tasting
+}
+
+
+export default function OverallRating({ submitRating, wineList }: Props) {
 
   function postTastingToDB() {
     console.log("wineList before post", wineList)
     ApiService.postTasting(wineList);
   }
 
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState<number | null>(2);
 
   return (
     <div>
