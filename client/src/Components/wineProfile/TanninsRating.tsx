@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { withStyles } from '@material-ui/core/styles';
 import tannin from '../pictures/tannin.svg';
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -15,7 +15,13 @@ const StyledRating = withStyles({
   },
 })(Rating);
 
-function TanninsRating({ tannins, updateTannins }) {
+
+interface Props {
+  tannins: number,
+  updateTannins: (event: ChangeEvent<{}>, newValue: number | null) => void
+}
+
+function TanninsRating({ tannins, updateTannins }: Props) {
 
   const [statusImage, setStatusImage] = useState(true);
 

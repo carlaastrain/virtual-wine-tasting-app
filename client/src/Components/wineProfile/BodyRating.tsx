@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { withStyles } from '@material-ui/core/styles';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import bodyPicture from '../pictures/body.svg'
 
 const StyledRating = withStyles({
@@ -15,7 +15,12 @@ const StyledRating = withStyles({
   },
 })(Rating);
 
-function BodyRating({ body, updateBody }) {
+interface Props {
+  body: number,
+  updateBody: (event: ChangeEvent<{}>, newValue: number | null) => void
+}
+
+function BodyRating({ body, updateBody }: Props) {
 
   const [statusImage, setStatusImage] = useState(true)
 

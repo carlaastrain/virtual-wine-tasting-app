@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { withStyles } from '@material-ui/core/styles';
 import sugar from '../pictures/sugar.svg';
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import arrow from '../pictures/arrow.svg'
 
 const StyledRating = withStyles({
@@ -16,7 +16,12 @@ const StyledRating = withStyles({
   },
 })(Rating);
 
-function FruitRating({ fruit, updateFruit }) {
+interface Props {
+  fruit: number,
+  updateFruit: (event: ChangeEvent<{}>, newValue: number | null) => void
+}
+
+function FruitRating({ fruit, updateFruit }: Props) {
 
   const [statusImage, setStatusImage] = useState(true);
   const [showRatingExplaination, setShowRatingExplaination] = useState(true);
@@ -61,10 +66,10 @@ function FruitRating({ fruit, updateFruit }) {
           </details>
         </div>
         <img src={sugar} alt="lemon" className={statusImage === true ? '' : 'hidden__image'}></img></div>) : (<div>
-        
+
           <img src={arrow} alt="arrow to rating" className='rating__explanation__img'></img>
           <div className='rating__explanation'><h1>rate here</h1></div>
-          </div>)}
+        </div>)}
 
     </div>
   </div>)
