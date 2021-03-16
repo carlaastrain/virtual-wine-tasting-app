@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import FruitRating from "../wineProfile/FruitRating";
 import BodyRating from "../wineProfile/BodyRating";
 import TanninsRating from "../wineProfile/TanninsRating";
@@ -8,11 +8,6 @@ import PossibleFlavors from "../wineFlavors/PossibleFlavors";
 import WineDB from "../wineDB/WineDB";
 import OverallRating from "../wineOverallRating/OverallRating";
 import { User, Tasting } from '../ApiService'
-
-function myFunc<T>(myArg: T): T {
-  return myArg;
-}
-
 
 interface Props {
   user: User
@@ -33,7 +28,7 @@ export default function WineTasting({ user }: Props) {
   const [dominantFlavors, setDominantFlavors] = useState([]);
   const [wineList, setWineList] = useState<Tasting>();
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (winery && year && grape) {
       setWinery(winery);
@@ -43,17 +38,17 @@ export default function WineTasting({ user }: Props) {
     } else setError(true);
   }
 
-  function handleChangeWinery(event) {
+  function handleChangeWinery(event: ChangeEvent<HTMLInputElement>) {
     if (error) setError(false);
     setWinery(event.target.value);
   }
 
-  function handleChangeYear(event) {
+  function handleChangeYear(event: ChangeEvent<HTMLInputElement>) {
     if (error) setError(false);
     setYear(event.target.value);
   }
 
-  function handleChangeGrape(event) {
+  function handleChangeGrape(event: ChangeEvent<HTMLInputElement>) {
     if (error) setError(false);
     setGrape(event.target.value);
   }
@@ -74,19 +69,19 @@ export default function WineTasting({ user }: Props) {
     return tannins !== 0 && body === 0;
   }
 
-  function updateBody(event: any, value: string) {
+  function updateBody(event, value) {
     setBody(value);
   }
 
-  function updateFruit(event: any, value) {
+  function updateFruit(event, value) {
     setFruit(value);
   }
 
-  function updateTannins(event: any, value) {
+  function updateTannins(event, value) {
     setTannins(value);
   }
 
-  function updateAcidity(event: any, value) {
+  function updateAcidity(event, value) {
     setAcidity(value);
   }
 

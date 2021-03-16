@@ -65,12 +65,10 @@ export interface User {
   userId: number,
   mail: string,
   password: string,
-  createdAt: string,
-  updatedAt: string
 }
 
 // GET ALL USERS
-export async function getUsers(): Promise<User> {
+export async function getUsers(): Promise<User[]> {
   try {
     const response = await axios.get(url + '/api/allusers');
     // console.log(response);

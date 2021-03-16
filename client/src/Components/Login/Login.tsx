@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import * as ApiService from '../ApiService';
@@ -28,12 +28,7 @@ export default function Login({ loginUser }: Props) {
     checkIfUserIsInDatabase()
   }, [mail])
 
-  // async function getAllUsers() {
-  //   const users = await ApiService.getUsers()
-  //   setUsers(users)
-  // }
-
-  function handleSubmit(event: any) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (mail && password && isRegistered === true && password === passwordFromDB) {
       loginUser(mail, password, userId, { userValidated: true })
@@ -46,35 +41,35 @@ export default function Login({ loginUser }: Props) {
       if (user.mail === mail) {
         setIsRegistered(true);
         setPasswordFromDB(user.password)
-        setUserId(user.id)
+        setUserId(user.userId)
         console.log("found")
       }
     })
   }
 
-  function handleChangeMail(event) {
+  function handleChangeMail(event: ChangeEvent<HTMLInputElement>) {
     if (error) setError(false);
     setMail(event.target.value);
     checkIfUserIsInDatabase()
   }
 
-  function handleChangePassword(event) {
+  function handleChangePassword(event: ChangeEvent<HTMLInputElement>) {
     if (error) setError(false);
     setPassword(event.target.value);
   }
 
   //REGISTRATION - FUNCTIONS
-  function handleChangeNewMail(event) {
+  function handleChangeNewMail(event: ChangeEvent<HTMLInputElement>) {
     if (error) setError(false);
     setNewMail(event.target.value);
   }
 
-  function handleChangeNewPassword(event) {
+  function handleChangeNewPassword(event: ChangeEvent<HTMLInputElement>) {
     if (error) setError(false);
     setNewPassword(event.target.value);
   }
 
-  function handleRegistrationSubmit(event) {
+  function handleRegistrationSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (newMail && newPassword) {
       setNewMail(newMail);

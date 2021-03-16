@@ -9,7 +9,7 @@ import Box from '@material-ui/core/Box';
 
 //interface is an oject with specif keys 
 interface Props {
-  wine: any
+  wine: ApiService.Tasting
 }
 
 //wine is just one key in the props object 
