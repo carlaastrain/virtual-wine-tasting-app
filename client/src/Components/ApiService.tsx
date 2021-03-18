@@ -2,9 +2,10 @@ import axios from 'axios';
 const url = 'http://localhost:3001';
 
 // GET ALL WINE TASTINGS FROM DB
-export async function getTastings(id: number) {
+export async function getTastings(userId: number) {
+  console.log(userId)
   try {
-    const response = await axios.get(url + '/api/tastings/' + id);
+    const response = await axios.get(url + '/api/tastings/' + `${userId}`);
     // console.log(response);
     return response.data;
   } catch (error) {
@@ -13,7 +14,7 @@ export async function getTastings(id: number) {
 }
 
 export interface Tasting {
-  id: number,
+  id?: number,
   winery: string,
   year: number,
   grape: string,
@@ -25,10 +26,12 @@ export interface Tasting {
   arrPossibleFlavors: string[],
   overallRating: number,
   userId: number
+
 }
 
 // POST ONE TASTING TO DB
 export function postTasting(options: Tasting) {
+  console.log('postTasting', options)
   axios.post(url + '/api/tastings', options)
     .then(function (response) {
       console.log(response);
@@ -40,8 +43,8 @@ export function postTasting(options: Tasting) {
 }
 
 //DELETE TASTING BY ID
-export function deleteTasting(id: number) {
-  axios.delete(url + '/api/tastings/' + id)
+export function deleteTasting(id: number | undefined) {
+  axios.delete(url + '/api/tastings/' + `${id}`)
     .then(function (response) {
       console.log(response);
     })
@@ -62,7 +65,7 @@ export function postUser(options: { mail: string, password: string }) {
 }
 
 export interface User {
-  userId: number,
+  id: number,
   mail: string,
   password: string,
 }

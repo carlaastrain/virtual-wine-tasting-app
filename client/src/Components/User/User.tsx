@@ -5,7 +5,7 @@ interface Props {
   user: User
 }
 
-export default function User({ user }: Props) {
+export default function UserComponent({ user }: Props) {
 
   return (<div>
 
@@ -19,7 +19,7 @@ export default function User({ user }: Props) {
 
 
         <div>username: {user.mail}</div>
-        <div>userId: {user.userId}</div>
+        <div>userId: {user.id}</div>
         {/* <button onClick={() => console.log(user)}></button> */}
 
         <div onClick={() => window.location.reload()} className="logout__btn">logout here</div>

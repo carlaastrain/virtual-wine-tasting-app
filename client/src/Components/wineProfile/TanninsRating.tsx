@@ -18,7 +18,7 @@ const StyledRating = withStyles({
 
 interface Props {
   tannins: number,
-  updateTannins: (event: ChangeEvent<{}>, newValue: number | null) => void
+  updateTannins: (newValue: number) => void
 }
 
 function TanninsRating({ tannins, updateTannins }: Props) {
@@ -44,7 +44,7 @@ function TanninsRating({ tannins, updateTannins }: Props) {
             precision={0.5}
             value={tannins}
             icon={<FiberManualRecordIcon fontSize="inherit" />}
-            onChange={(event, newValue) => updateTannins(event, newValue)}
+            onChange={(event, newValue) => newValue ? updateTannins(newValue) : null}
           />
         </Box>
         <div className='profile__tasting__description__text'>

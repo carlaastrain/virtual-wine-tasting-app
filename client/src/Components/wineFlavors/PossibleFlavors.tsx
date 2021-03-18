@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { FruitFlavor, DryFruitFlavor, FloralFlavor, HerbFlavor, SpiceFlavor, EarthFlavor, OtherFlavor } from '../wineDB/WineDB'
 import wineDB from '../wineDB/WineDB'
 
+// https://www.typescriptlang.org/docs/handbook/2/types-from-types.html
 type Props = {
   updatePossibleFlavors: (args: any) => void,
   wineDB: typeof wineDB,
   grape: keyof typeof wineDB,
 
+
 }
 
 export default function PossibleFlavors({ updatePossibleFlavors, grape, wineDB }: Props) {
-
+  // https://www.typescriptlang.org/docs/handbook/utility-types.html
   const [fruitFlavors, setFruitFlavors] = useState<Partial<Record<FruitFlavor, FruitFlavor>>>({});
   const [dryFruitFlavors, setDryFruitFlavors] = useState<Partial<Record<DryFruitFlavor, DryFruitFlavor>>>({});
   const [floralFlavors, setFloralFlavors] = useState<Partial<Record<FloralFlavor, FloralFlavor>>>({});
@@ -126,31 +128,31 @@ export default function PossibleFlavors({ updatePossibleFlavors, grape, wineDB }
         </span>
         <div className='possible__flavors'>
           {wineDB[grape].possibleFlavors.fruits.map((fruit) => <div
-            onClick={() => updateFruitFlavors(fruit)}
+            key={fruit} onClick={() => updateFruitFlavors(fruit)}
             className={(fruitFlavors[fruit] === fruit ? 'toggled__flavor__box' : '') + ' flavor__box'} ><h6 className='fruit'>fruit flavor</h6>{fruit}</div>)}
 
           {wineDB[grape].possibleFlavors.dryFruits.map((dryFruit) => <div
-            onClick={() => updateDryFruitFlavors(dryFruit)}
+            key={dryFruit} onClick={() => updateDryFruitFlavors(dryFruit)}
             className={(dryFruitFlavors[dryFruit] === dryFruit ? 'toggled__flavor__box' : '') + ' flavor__box'}><h6 className='dry__fruit'>dry fruit flavor</h6>{dryFruit}</div>)}
 
           {wineDB[grape].possibleFlavors.florals.map((floral) => <div
-            onClick={() => updateFloralFlavors(floral)}
+            key={floral} onClick={() => updateFloralFlavors(floral)}
             className={(floralFlavors[floral] === floral ? 'toggled__flavor__box' : '') + ' flavor__box'}><h6 className='floral'>floral flavor</h6>{floral}</div>)}
 
           {wineDB[grape].possibleFlavors.herbs.map((herb) => <div
-            onClick={() => updateHerbalFlavors(herb)}
+            key={herb} onClick={() => updateHerbalFlavors(herb)}
             className={(herbalFlavors[herb] === herb ? 'toggled__flavor__box' : '') + ' flavor__box'}><h6 className='herbal'>herbal flavor</h6>{herb}</div>)}
 
           {wineDB[grape].possibleFlavors.spices.map((spice) => <div
-            onClick={() => updateSpiceFlavors(spice)}
+            key={spice} onClick={() => updateSpiceFlavors(spice)}
             className={(spiceFlavors[spice] === spice ? 'toggled__flavor__box' : '') + ' flavor__box'}><h6 className='spice'>spice flavor</h6>{spice}</div>)}
 
           {wineDB[grape].possibleFlavors.earthFlavors.map((earthFlavor) => <div
-            onClick={() => updateEarthFlavors(earthFlavor)}
+            key={earthFlavor} onClick={() => updateEarthFlavors(earthFlavor)}
             className={(earthFlavors[earthFlavor] === earthFlavor ? 'toggled__flavor__box' : '') + ' flavor__box'}><h6 className='earth'>eath flavor</h6>{earthFlavor}</div>)}
 
           {wineDB[grape].possibleFlavors.others.map((other) => <div
-            onClick={() => updateOtherFlavors(other)}
+            key={other} onClick={() => updateOtherFlavors(other)}
             className={(otherFlavors[other] === other ? 'toggled__flavor__box' : '') + ' flavor__box'}><h6 className='other'>other flavor</h6>{other}</div>)}
         </div>
         <button onClick={() =>

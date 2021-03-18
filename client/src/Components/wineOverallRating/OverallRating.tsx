@@ -19,7 +19,7 @@ const StyledRating = withStyles({
 
 interface Props {
   submitRating: (args: any) => void,
-  wineList: ApiService.Tasting
+  wineList: ApiService.Tasting | undefined
 }
 
 
@@ -27,7 +27,9 @@ export default function OverallRating({ submitRating, wineList }: Props) {
 
   function postTastingToDB() {
     console.log("wineList before post", wineList)
-    ApiService.postTasting(wineList);
+    if (wineList) {
+      ApiService.postTasting(wineList);
+    }
   }
 
   const [value, setValue] = useState<number | null>(2);

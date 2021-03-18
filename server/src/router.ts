@@ -10,7 +10,7 @@ const router = express.Router();
 router.post('/api/tastings', tastings.create);
 
 // Retrieve all tastings
-router.get('/api/tastings/:id', tastings.findAll);
+router.get('/api/tastings/:userId', tastings.findAll);
 
 // Delete a Tasting with id
 router.delete('/api/tastings/:id', tastings.remove);

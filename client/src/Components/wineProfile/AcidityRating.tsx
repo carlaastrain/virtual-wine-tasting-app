@@ -17,7 +17,7 @@ const StyledRating = withStyles({
 
 interface Props {
   acidity: number
-  updateAcidity: (event: ChangeEvent<{}>, newValue: number | null) => void
+  updateAcidity: (newValue: number) => void
 }
 
 function AcidityRating({ acidity, updateAcidity }: Props) {
@@ -42,7 +42,7 @@ function AcidityRating({ acidity, updateAcidity }: Props) {
             precision={0.5}
             value={acidity}
             icon={<FiberManualRecordIcon fontSize="inherit" />}
-            onChange={(event, newValue) => updateAcidity(event, newValue)}
+            onChange={(event, newValue) => newValue ? updateAcidity(newValue) : null}
           />
         </Box>
         <div className='profile__tasting__description__text'>

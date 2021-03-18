@@ -13,9 +13,10 @@ export default function WineList({ user }: Props) {
   const [wineListDB, setWineListDB] = useState<ApiService.Tasting[]>([])
 
   useEffect(() => {
-    ApiService.getTastings(user.userId)
+    console.log('userEffect', user)
+    ApiService.getTastings(user.id)
       .then((data) => setWineListDB(data))
-  }, [user])
+  }, [])
 
   // async function consoleLogDB () {
   //   //console.log("hola")

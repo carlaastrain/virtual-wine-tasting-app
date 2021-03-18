@@ -9,6 +9,7 @@ import WineDB from "../wineDB/WineDB";
 import OverallRating from "../wineOverallRating/OverallRating";
 import { User, Tasting } from '../ApiService'
 
+
 interface Props {
   user: User
 }
@@ -24,8 +25,8 @@ export default function WineTasting({ user }: Props) {
   const [fruit, setFruit] = useState(0);
   const [tannins, setTannins] = useState(0);
   const [acidity, setAcidity] = useState(0);
-  const [possibleFlavors, setPossibleFlavors] = useState({});
-  const [dominantFlavors, setDominantFlavors] = useState([]);
+  const [possibleFlavors, setPossibleFlavors] = useState<{ fruitFlavors: { [key: string]: string }, dryFruitFlavors: { [key: string]: string }, floralFlavors: { [key: string]: string }, herbalFlavors: { [key: string]: string }, spiceFlavors: { [key: string]: string }, earthFlavors: { [key: string]: string }, otherFlavors: { [key: string]: string }, ratingCompleted: boolean }>();
+  const [dominantFlavors, setDominantFlavors] = useState<{ ratingCompleted: boolean, flavors: { [key: string]: string } }>();
   const [wineList, setWineList] = useState<Tasting>();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -48,7 +49,7 @@ export default function WineTasting({ user }: Props) {
     setYear(event.target.value);
   }
 
-  function handleChangeGrape(event: ChangeEvent<HTMLInputElement>) {
+  function handleChangeGrape(event: ChangeEvent<HTMLSelectElement>) {
     if (error) setError(false);
     setGrape(event.target.value);
   }
@@ -69,34 +70,45 @@ export default function WineTasting({ user }: Props) {
     return tannins !== 0 && body === 0;
   }
 
-  function updateBody(event, value) {
+  function updateBody(value: number) {
     setBody(value);
   }
 
-  function updateFruit(event, value) {
+  function updateFruit(value: number) {
     setFruit(value);
   }
 
-  function updateTannins(event, value) {
+  function updateTannins(value: number) {
     setTannins(value);
   }
 
-  function updateAcidity(event, value) {
+  function updateAcidity(value: number) {
     setAcidity(value);
   }
 
+  function submitRating(value: number) {
+    console.log('hello')
+    let arrDominantFlavors = Object.values(dominantFlavors?.flavors || {});
+    // PossibleFlavors(Nested Object) will be transformed in a 1 dimensional Array
 
+    const fruitFlavors = Object.values(possibleFlavors?.fruitFlavors || {})
+    const dryFruitFlavors = Object.values(possibleFlavors?.dryFruitFlavors || {})
+    const floralFlavors = Object.values(possibleFlavors?.floralFlavors || {})
+    const herbalFlavors = Object.values(possibleFlavors?.herbalFlavors || {})
+    const spiceFlavors = Object.values(possibleFlavors?.spiceFlavors || {})
+    const earthFlavors = Object.values(possibleFlavors?.earthFlavors || {})
+    const otherFlavors = Object.values(possibleFlavors?.otherFlavors || {})
 
+    let arrPossibleFlavors = fruitFlavors.concat(dryFruitFlavors).concat(floralFlavors).concat(herbalFlavors).concat(spiceFlavors).concat(earthFlavors).concat(otherFlavors)
+    arrPossibleFlavors
+      .filter(value => Object.keys(value).length !== 0)
+      .map(element => Object.values(element));
 
-  function submitRating(value) {
-
-    let arrDominantFlavors = Object.values(dominantFlavors.flavors);
-    // PossibleFlavors(Nested Object) will be transformed in an 1 dimensional Array
-    let arrPossibleFlavors = (Object.values(possibleFlavors).filter(value => Object.keys(value).length !== 0).map(element => Object.values(element)));
-
+    console.log('THIS IS ARRPOSSIBLEFLAVORS', arrPossibleFlavors)
+    // let arrPossibleFlavors = ['hello'];
     setWineList(
       {
-        userId: user.userId,
+        userId: user.id,
         winery: winery,
         year: parseInt(year),
         grape: grape,
@@ -106,7 +118,6 @@ export default function WineTasting({ user }: Props) {
         body: body,
         dominantFlavors: arrDominantFlavors,
         arrPossibleFlavors: arrPossibleFlavors,
-        // possibleFlavors: possibleFlavors,
         overallRating: value,
       }
     )
@@ -135,15 +146,15 @@ export default function WineTasting({ user }: Props) {
               onChange={handleChangeYear}
               placeholder="Type in year ..."
             ></input>
-            <select value={grape} onChange={handleChangeGrape} name="grape" className="start__tasting__input">
-              <option disabled={true} value="">select grape variety</option>
-              <option name='malbec'>Malbec</option>
-              <option name='merlot'>Merlot</option>
-              <option name='syrah'>Syrah</option>
-              <option name='riesling'>Riesling</option>
-              <option name='gewürztraminer'>Gewürztraminer</option>
-              <option name='cabernetSauvignon'>CabernetSauvignon</option>
-              <option name='pinotNoir'>PinotNoir</option>
+            <select value={grape} onChange={handleChangeGrape} name="grape" className="start__tasting__input" data-testid='select'>
+              <option disabled={true} value="" data-testid='select-option'>select grape variety </option>
+              <option className='malbec' value='malbec' data-testid='select-option'>Malbec</option>
+              <option className='merlot' value='merlot' data-testid='select-option'>Merlot</option>
+              <option className='syrah' value='syrah' data-testid='select-option'>Syrah</option>
+              <option className='riesling' value='riesling' data-testid='select-option'>Riesling</option>
+              <option className='gewürztraminer' value='gewürztraminer' data-testid='select-option'>Gewürztraminer</option>
+              <option className='cabernetSauvignon' value='cabernetSauvignon' data-testid='select-option'>CabernetSauvignon</option>
+              <option className='pinotNoir' value='pinotNoir' data-testid='select-option'>PinotNoir</option>
             </select>
             <button type="submit" className="start__tasting__btn">start tasting</button>
           </form>
@@ -175,7 +186,7 @@ export default function WineTasting({ user }: Props) {
         <></>
       )}
 
-      {body !== 0 && !dominantFlavors.ratingCompleted ? (
+      {body !== 0 && !dominantFlavors?.ratingCompleted ? (
         <DominantFlavors
           updateDominantFlavors={setDominantFlavors}
           grape={grape}
@@ -185,7 +196,7 @@ export default function WineTasting({ user }: Props) {
         <></>
       )}
 
-      {dominantFlavors.ratingCompleted && !possibleFlavors.ratingCompleted ? (
+      {dominantFlavors?.ratingCompleted && !possibleFlavors?.ratingCompleted ? (
         <PossibleFlavors
           updatePossibleFlavors={setPossibleFlavors}
           grape={grape}
@@ -195,7 +206,7 @@ export default function WineTasting({ user }: Props) {
         <></>
       )}
 
-      {possibleFlavors.ratingCompleted === true ? (
+      {possibleFlavors?.ratingCompleted === true ? (
         <OverallRating submitRating={submitRating} wineList={wineList} />
       ) : (
         <></>

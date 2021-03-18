@@ -17,7 +17,7 @@ const StyledRating = withStyles({
 
 interface Props {
   body: number,
-  updateBody: (event: ChangeEvent<{}>, newValue: number | null) => void
+  updateBody: (newValue: number) => void
 }
 
 function BodyRating({ body, updateBody }: Props) {
@@ -43,7 +43,7 @@ function BodyRating({ body, updateBody }: Props) {
             value={body}
             color='black'
             icon={<FiberManualRecordIcon fontSize="inherit" />}
-            onChange={(event, newValue) => updateBody(event, newValue)}
+            onChange={(event, newValue) => newValue ? updateBody(newValue) : null}
           />
         </Box>
         <div className='profile__tasting__description__text'>

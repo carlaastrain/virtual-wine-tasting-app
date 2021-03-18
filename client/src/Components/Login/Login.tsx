@@ -4,7 +4,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import * as ApiService from '../ApiService';
 
 interface Props {
-  loginUser: (mail: string, password: string, userId: number, validated: any) => void
+  loginUser: (mail: string, password: string, userId: number, validated: boolean) => void
 }
 
 export default function Login({ loginUser }: Props) {
@@ -12,10 +12,10 @@ export default function Login({ loginUser }: Props) {
   // LOGIN - STATES
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  const [userId, setUserId] = useState(0);
+  const [userId, setUserId] = useState(1);
   const [isRegistered, setIsRegistered] = useState(false);
   const [passwordFromDB, setPasswordFromDB] = useState("");
-  const [users, setUsers] = useState([])
+
 
   // REGISTRATION - STATES
   const [newMail, setNewMail] = useState("");
@@ -28,21 +28,25 @@ export default function Login({ loginUser }: Props) {
     checkIfUserIsInDatabase()
   }, [mail])
 
+
+
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (mail && password && isRegistered === true && password === passwordFromDB) {
-      loginUser(mail, password, userId, { userValidated: true })
+      loginUser(mail, password, userId, true)
     } else setError(true);
   }
 
   async function checkIfUserIsInDatabase() {
     const users = await ApiService.getUsers()
+
     users.map((user) => {
       if (user.mail === mail) {
         setIsRegistered(true);
         setPasswordFromDB(user.password)
-        setUserId(user.userId)
-        console.log("found")
+        setUserId(user.id)
+        return
       }
     })
   }

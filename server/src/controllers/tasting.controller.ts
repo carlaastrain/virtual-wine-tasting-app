@@ -41,8 +41,8 @@ export const create: RequestHandler = async (req, res) => {
 
 // Retrieve all Tastings from the database.
 export const findAll: RequestHandler = (req, res) => {
-    const id = req.params.id;
-    Tasting.findAll({ where: { userId: id } })
+    const userId = req.params.userId;
+    Tasting.findAll({ where: { userId: userId } })
         .then(data => {
             res.send(data);
         })

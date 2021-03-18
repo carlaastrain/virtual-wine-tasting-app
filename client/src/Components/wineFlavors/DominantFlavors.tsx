@@ -14,7 +14,11 @@ export default function DominantFlavors({
   wineDB,
 }: Props) {
 
+  // Partial<Type>
+  // Constructs a type with all properties of Type set to optional. This utility will return a type that represents all subsets of a given type.
 
+  // Record<Keys,Type>
+  // Constructs an object type whose property keys are Keys and whose property values are Type. This utility can be used to map the properties of a type to another type.
   const [flavors, setFlavors] = useState<Partial<Record<Flavor, Flavor>>>({});
 
   function updateFlavors(flavor: Flavor) {
@@ -40,7 +44,7 @@ export default function DominantFlavors({
       <div className='container__and__button'>
         <div className="dominant__flavors__container">
           {wineDB[grape].dominantFlavors.map((flavor) => (
-            <div onClick={() => updateFlavors(flavor)} className={(flavors[flavor] === flavor ? 'dominant__flavors__box__toggled' : 'dominant__flavors__box')}>{flavor}</div>
+            <div key={flavor} onClick={() => updateFlavors(flavor)} className={(flavors[flavor] === flavor ? 'dominant__flavors__box__toggled' : 'dominant__flavors__box')}>{flavor}</div>
 
           ))}
 

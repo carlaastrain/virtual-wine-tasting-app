@@ -4,7 +4,7 @@ import Box from '@material-ui/core/Box';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { withStyles } from '@material-ui/core/styles';
 import sugar from '../pictures/sugar.svg';
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import arrow from '../pictures/arrow.svg'
 
 const StyledRating = withStyles({
@@ -18,7 +18,7 @@ const StyledRating = withStyles({
 
 interface Props {
   fruit: number,
-  updateFruit: (event: ChangeEvent<{}>, newValue: number | null) => void
+  updateFruit: (newValue: number) => void
 }
 
 function FruitRating({ fruit, updateFruit }: Props) {
@@ -29,7 +29,7 @@ function FruitRating({ fruit, updateFruit }: Props) {
   function threeSeconds() {
     setTimeout(() => {
       setShowRatingExplaination(false)
-    }, 2000);
+    }, 1);
   }
 
   threeSeconds()
@@ -54,7 +54,7 @@ function FruitRating({ fruit, updateFruit }: Props) {
             precision={0.5}
             value={fruit}
             icon={<FiberManualRecordIcon fontSize="inherit" />}
-            onChange={(event, newValue) => updateFruit(event, newValue)}
+            onChange={(event, newValue) => newValue ? updateFruit(newValue) : null}
           />
         </Box>
       </div>
